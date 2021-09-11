@@ -6,8 +6,9 @@ const modules = [
   require('./modules/customStyle'),
   
   // Login page
-  require("./modules/autoLogin"),
+  // require("./modules/autoLogin"),
   require("./modules/loginRetry"),
+  require("./modules/transformLogin"),
 
   // All authenticated pages
   // require("./modules/hideHeader"),
