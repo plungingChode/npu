@@ -4,7 +4,7 @@
   "description": "Felturbózza a Neptun-odat",
   "main": "npu.user.js",
   "scripts": {
-    "start": "webpack-cli --watch",
+    "start": "webpack-cli --config webpack.dev.js --watch",
     "build": "webpack-cli",
     "verify": "run-s verify:*",
     "verify:eslint": "eslint .",
