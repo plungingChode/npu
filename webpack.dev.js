@@ -1,6 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 const webpack = require("webpack");
+const cssLoader = { loader: "css-loader", options: { url: false } };
 
 module.exports = {
   mode: "development",
@@ -34,17 +35,13 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.(png|jpe?g|gif|svg|ico)$/,
-        use: "url-loader",
-      },
-      {
         test: /\.scss$/i,
-        use: ["raw-loader", "extract-loader", "css-loader", "sass-loader"],
+        use: ["raw-loader", "extract-loader", cssLoader, "sass-loader"],
       },
       {
         test: /\.css$/i,
-        use: ["raw-loader", "extract-loader", "css-loader"]
-      }
+        use: ["raw-loader", "extract-loader", cssLoader],
+      },
     ],
   },
 };
