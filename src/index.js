@@ -2,12 +2,15 @@ const utils = require("./utils");
 const storage = require("./storage");
 
 const modules = [
+  // Styling overhaul
+  require('./modules/customStyle'),
+  
   // Login page
   require("./modules/autoLogin"),
   require("./modules/loginRetry"),
 
   // All authenticated pages
-  require("./modules/hideHeader"),
+  // require("./modules/hideHeader"),
   require("./modules/pageTitle"),
   require("./modules/mainMenuFixes"),
   require("./modules/termSelectorFixes"),

@@ -175,7 +175,7 @@ function initAutoLogin() {
   submit.attr("value", `${loginButtonText} (${loginCount})`);
 
   $(".login_button_td").append(
-    '<div id="abortLogin" style="text-align: center; margin: 23px 0 0 128px"><a href="#" class="abort_login">Megszakít</a></div>'
+    '<div id="abortLogin"><a href="#" class="abort_login">Megszakít</a></div>'
   );
   $(".login_button_td a.abort_login").click(function (e) {
     e.preventDefault();
@@ -191,7 +191,7 @@ function initAutoLogin() {
       abortLogin();
       submit.attr("value", `${loginButtonText}...`);
     }
-  }, 1000);
+  }, 100000);
 }
 
 // Abort the auto login countdown

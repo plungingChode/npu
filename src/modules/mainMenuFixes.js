@@ -4,20 +4,6 @@ const utils = require("../utils");
 // Fix opening in new tab and add shortcuts
 function fixMenu() {
   const color = $("#lbtnQuit").css("color");
-  utils.injectCss(`
-    ul.menubar, .top_menu_wrapper {
-      cursor: default !important; 
-    }
-    #mb1 li.menu-parent {
-      color: #525659 !important;
-    }
-    #mb1 li.menu-parent.has-target {
-      color: ${color} !important;
-    }
-    #mb1 li.menu-parent.has-target:hover {
-      color: #000 !important;
-    }
-  `);
 
   $("#mb1_Tanulmanyok")
     .attr("targeturl", "main.aspx?ctrl=0206&ismenuclick=true")
