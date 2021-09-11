@@ -21,10 +21,10 @@ module.exports = {
         if (typeof version !== "string" || !/^\d+\.\d+\.\d+$/.exec(version)) {
           throw new Error(`Invalid package version: ${version}`);
         }
-        let meta;
-        meta = fs.readFileSync(path.join(__dirname, "src", "meta-dev.txt"), "utf8");
-        meta = meta.replace("<version>", version);
-        meta = meta.replace("<dev-build>", path.resolve(__dirname, "dist", "npu-dev.user.js"));
+        const meta = fs
+          .readFileSync(path.join(__dirname, "src", "meta-dev.txt"), "utf8")
+          .replace("<version>", version)
+          .replace("<dev-build>", path.resolve(__dirname, "dist", "npu-dev.user.js"));
         return meta;
       },
       entryOnly: true,
@@ -38,13 +38,13 @@ module.exports = {
         use: "url-loader",
       },
       {
-        test: /\.scss$/,
-        use: [
-          "extract-loader",
-          "css-loader",
-          "sass-loader",
-        ],
+        test: /\.scss$/i,
+        use: ["raw-loader", "extract-loader", "css-loader", "sass-loader"],
       },
+      {
+        test: /\.css$/i,
+        use: ["raw-loader", "extract-loader", "css-loader"]
+      }
     ],
   },
 };
