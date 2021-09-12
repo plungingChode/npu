@@ -3,13 +3,18 @@ const utils = require("../utils");
 
 // Add current page name to the window title
 function fixTitle() {
-  const originalTitle = document.title;
-  window.setInterval(() => {
-    const pageTitle = $("#upMenuCaption_menucaption").text().toString();
-    if (document.title === originalTitle) {
-      document.title = (pageTitle === "" ? "" : `${pageTitle} – `) + originalTitle;
-    }
-  }, 1000);
+  const pageTitle = $("#upMenuCaption_menucaption").text();
+
+  if (!!pageTitle) {
+    const newTitle = `${pageTitle} - ${document.title}`;
+
+    // Set correct page title
+    document.title = newTitle;
+
+    // ...which somehow gets reset after ~0.5s, so we need to update
+    // it at least once (periodically to be sure) 
+    window.setInterval(() => (document.title = newTitle), 1000);
+  }
 }
 
 module.exports = {
