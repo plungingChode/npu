@@ -1,6 +1,9 @@
 const fs = require("fs");
 const path = require("path");
-const webpack = require("webpack");
+const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
+const TerserPlugin = require("terser-webpack-plugin");
+
+const cssLoader = { loader: "css-loader", options: { url: false } };
 
 module.exports = {
   mode: "production",
@@ -11,36 +14,32 @@ module.exports = {
     path: path.resolve(__dirname, "dist"),
     publicPath: "",
   },
-  optimization: {
-    minimize: false,
-  },
   plugins: [
-    new webpack.BannerPlugin({
-      banner: () => {
-        const version = JSON.parse(fs.readFileSync(path.join(__dirname, "package.json"), "utf8")).version;
-        if (typeof version !== "string" || !/^\d+\.\d+\.\d+$/.exec(version)) {
-          throw new Error(`Invalid package version: ${version}`);
-        }
-        const meta = fs.readFileSync(path.join(__dirname, "src", "meta.txt"), "utf8");
-        return meta.replace("<version>", version);
+    new TerserPlugin({
+      terserOptions: {
+        format: {
+          preamble: (() => {
+            const version = JSON.parse(fs.readFileSync(path.join(__dirname, "package.json"), "utf8")).version;
+            if (typeof version !== "string" || !/^\d+\.\d+\.\d+$/.exec(version)) {
+              throw new Error(`Invalid package version: ${version}`);
+            }
+            const meta = fs.readFileSync(path.join(__dirname, "src", "meta.txt"), "utf8");
+            return meta.replace("<version>", version);
+          })(),
+        },
       },
-      entryOnly: true,
-      raw: true,
     }),
+    new CssMinimizerPlugin(),
   ],
   module: {
     rules: [
       {
-        test: /\.(png|jpe?g|gif|svg|ico)$/,
-        use: "url-loader",
+        test: /\.scss$/i,
+        use: ["raw-loader", "extract-loader", cssLoader, "sass-loader"],
       },
       {
-        test: /\.scss$/,
-        use: [
-          "extract-loader",
-          "css-loader",
-          "sass-loader",
-        ],
+        test: /\.css$/i,
+        use: ["raw-loader", "extract-loader", cssLoader],
       },
     ],
   },

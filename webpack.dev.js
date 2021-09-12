@@ -1,7 +1,12 @@
 const fs = require("fs");
 const path = require("path");
 const webpack = require("webpack");
+const BrowserSyncPlugin = require("browser-sync-webpack-plugin");
+const { env } = require("process");
+const dotenv = require("dotenv");
+
 const cssLoader = { loader: "css-loader", options: { url: false } };
+dotenv.config();
 
 module.exports = {
   mode: "development",
@@ -28,8 +33,12 @@ module.exports = {
           .replace("<dev-build>", path.resolve(__dirname, "dist", "npu-dev.user.js"));
         return meta;
       },
-      entryOnly: true,
+      entryOnly: false,
       raw: true,
+    }),
+    new BrowserSyncPlugin({
+      proxy: env.DEV_PROXY,
+      browser: env.DEV_BROWSER,
     }),
   ],
   module: {
