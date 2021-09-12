@@ -8,11 +8,12 @@
   --neptun-major-accent-fill: #2489ca;
   --neptun-major-accent-fill-hover: #1f7dba;
   --neptun-major-accent-fill-active: #1d70a5;
+  --neptun-major-accent-fill-contrast: #155379;
   --neptun-major-accent-text: white;
 
   --neptun-minor-accent-fill: transparent;
-  --neptun-minor-accent-fill-hover: hsl(204, 71%, 83%);
-  --neptun-minor-accent-fill-active: hsl(203, 70%, 78%);
+  --neptun-minor-accent-fill-hover: hsl(204, 70%, 93%);
+  --neptun-minor-accent-fill-active: hsl(203, 70%, 88%);
   --neptun-minor-accent-text: #2489ca;
   --neptun-minor-accent-text-hover: #1f7dba;
   --neptun-minor-accent-text-active: #1d70a5;
@@ -23,22 +24,27 @@
   font-family: "Roboto", "DejaVu Sans", sans-serif !important;
   font-weight: 300;
 }
-*, ::before, ::after {
+*,
+::before,
+::after {
   box-sizing: border-box;
 }
 body {
   margin: 0;
 }
-h3, p {
+h3,
+p {
   margin: 0;
   padding: 0;
 }
-input, button {
+input,
+button {
   font-family: inherit;
   font-size: inherit;
 }
 
-a, a:visited {
+a,
+a:visited {
   text-decoration: none;
   color: var(--neptun-major-accent-fill);
 

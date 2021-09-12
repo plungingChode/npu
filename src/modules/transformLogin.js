@@ -1,7 +1,10 @@
 const $ = window.jQuery;
 const utils = require("../utils");
 
-/** Remove unnecessary parts (parens, exact time, whitespace) of a date string */
+// The login page layout is beyond saving, so this module transforms it into
+// something easier to work with and style.
+
+/** Remove unnecessary parts (parens, exact time, whitespace) of a date string. */
 function formatDateString(date) {
   return date
     .replace(/[()]/g, "")
@@ -9,7 +12,11 @@ function formatDateString(date) {
     .trim();
 }
 
-function transformNews() {
+/**
+ * Transform news tables into an unordered list and append it to the
+ * `mainContainer` element.
+ */
+function transformNews(mainContainer) {
   const newsTitle = $("#lblHirek").text();
   const news = $("#dataListNews table").get().map(parseNewsItem).map(createNewsItem).join("");
 
@@ -20,9 +27,10 @@ function transformNews() {
     </div>
   `;
 
-  $(".login_center").append(newsEl);
+  mainContainer.append(newsEl);
 }
 
+/** Collect the relevant parts of a news item. */
 function parseNewsItem(newsTable) {
   const table = $(newsTable);
 
@@ -33,6 +41,7 @@ function parseNewsItem(newsTable) {
   };
 }
 
+/** Generate the HTML for a transformed news item. */
 function createNewsItem({ subject, content, date }) {
   return `
     <li class="news-item">
@@ -47,7 +56,11 @@ function createNewsItem({ subject, content, date }) {
   `;
 }
 
-function transformDocuments() {
+/**
+ * Transform document tables into an unordered list and append it to the
+ * `mainContainer` element.
+ */
+function transformDocuments(mainContainer) {
   const docsTitle = $("#lblDokumentumok").text();
   const docs = $("#dataListDocuments .table_left_docs").get().map(parseDocument).map(createDocumentItem).join("");
 
@@ -58,9 +71,10 @@ function transformDocuments() {
     </div>
   `;
 
-  $(".login_center").append(docsEl);
+  mainContainer.append(docsEl);
 }
 
+/** Collect the relevant parts of a document item. */
 function parseDocument(docTable) {
   const table = $(docTable);
   const link = table.find("a");
@@ -72,15 +86,20 @@ function parseDocument(docTable) {
   };
 }
 
+/** Generate the HTML for a transformed document item. */
 function createDocumentItem({ href, content }) {
   return `
     <li class="docs-item">
-      <a href="${href}">${content}</a>
+      <a href="${href}" target="_blank" rel="noopener">${content}</a>
     </li>
   `;
 }
 
-function transformLinks() {
+/**
+ * Transform link tables into a list and append it to the `mainContainer`
+ * element.
+ */
+function transformLinks(mainContainer) {
   const linksTitle = $("#lblLinkek").text();
   const links = $("#dataListLinks .table_left").get().map(parseLink).map(createLinkItem).join("");
 
@@ -91,9 +110,10 @@ function transformLinks() {
     </div>
   `;
 
-  $(".login_center").append(linksEl);
+  mainContainer.append(linksEl);
 }
 
+/** Collect the relevant parts of a link item. */
 function parseLink(linkTable) {
   const table = $(linkTable);
   const link = table.find("a");
@@ -104,24 +124,37 @@ function parseLink(linkTable) {
   };
 }
 
+/** Generate the HTML for a transformed link item. */
 function createLinkItem({ href, content }) {
-  return `<a href="${href}">${content}</a>`;
+  return `<a href="${href}" target="_blank" rel="noopener">${content}</a>`;
 }
 
-function transformLoginForm() {
+/**
+ * Transform the main login form into a more manageable state.
+ */
+function transformLoginForm(mainContainer) {
   const loginForm = $(".login_left_side > table");
   const { moduleType, serverName, langSelect, userName, password, loginButton } = parseLoginForm(loginForm);
 
+  // prettier-ignore
   const langButtons = langSelect.options
-    .map(
-      (lang, idx) => `
-        <button name="btnLang_${idx}" onclick="${lang.action}">${lang.caption}</button>
-      `
-    )
+    .map((lang, idx) => `
+      <button 
+        data-active="${lang.active}"
+        id="btnLang_${idx}" 
+        name="btnLang_${idx}" 
+        onclick="${lang.action}" 
+        title="${lang.caption}"
+      />
+    `)
     .join("");
 
   // Extract server name and free space
-  const [_, server, space] = /(.*)\((\d*)\)/.exec(serverName);
+  const serverParts = /(.*)\((\d*)\)/.exec(serverName);
+  const server = serverParts[1];
+  const space = serverParts[2];
+
+  // TODO add warning if there's no free space2
 
   const loginEl = `
     <div class="login login-container">
@@ -143,12 +176,16 @@ function transformLoginForm() {
           <label for="${password.field}">${password.caption}</label>
           <input type="password" id="${password.field}" name="${password.field}" />
         </div>
-        <input type="button" id="btnSubmit" onclick="${loginButton.action}" value="${loginButton.caption}" />
+        <input 
+          type="button" id="btnSubmit"
+          class="nt-button primary"
+          onclick="${loginButton.action}" 
+          value="${loginButton.caption}" />
       </div>
     </div>
   `;
 
-  $(".login_center").append(loginEl);
+  mainContainer.append(loginEl);
   $(userName.validator).appendTo(".login-field.username");
   $(userName.validatorState).appendTo(".login-field.username");
 }
@@ -161,7 +198,7 @@ function parseLoginForm(loginTable) {
     .map(input => ({
       caption: input.title,
       action: $(input).attr("onclick").replace(/"/g, "'"),
-      active: $(input).css("opacity") === "1"
+      active: $(input).css("opacity") === "1",
     }));
 
   return {
@@ -196,10 +233,13 @@ function shouldActivate() {
 }
 
 function initialize() {
-  transformLoginForm();
-  transformLinks();
-  transformNews();
-  transformDocuments();
+  const container = $(".login_center");
+
+  transformLoginForm(container);
+  transformLinks(container);
+  transformNews(container);
+  transformDocuments(container);
+
   $(".info_table_center_container_td").remove();
   $(".table_center").remove();
 }

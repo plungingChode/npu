@@ -8,7 +8,7 @@ function shouldActivate() {
 
 function initialize() {
   // Remove default styles
-  $('link[rel=stylesheet]').prop('disabled', true);
+  $("link[rel=stylesheet]").prop("disabled", true);
 
   // Load custom stylesheet
   utils.injectCss(css);
