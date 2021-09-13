@@ -11,9 +11,8 @@ const modules = [
   require("./modules/transformLogin"), // custom
 
   // All authenticated pages
-  // require("./modules/hideHeader"), // obsolete
+  require("./modules/transformHeader"), // custom
   require("./modules/pageTitle"), // done
-  require("./modules/mainMenuFixes"), // done
   require("./modules/termSelectorFixes"),
   require("./modules/paginationFixes"),
   require("./modules/officialMessageAlert"),
