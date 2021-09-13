@@ -7,12 +7,13 @@ function isNeptunPage() {
 
 // Returns whether we are on the login page
 function isLoginPage() {
-  return $("td.login_left_side").size() > 0;
+  return document.body.id === "bodyLogin";
 }
 
 // Returns whether we are authenticated
 function isLoggedIn() {
-  return !!getNeptunCode();
+  // Main form's ID is always #form1 (?)
+  return !!document.querySelector("#form1");
 }
 
 // Parses and returns the Neptun code of the current user
@@ -173,6 +174,71 @@ function isFailingGrade(str) {
   });
 }
 
+const pageGroup = {
+  /** Saját adatok */ personalData: /01\d\d/,
+  /** Tanulmányok */ studies: /02\d[0-2|4-9]|(h_adv|h_mar).*/,
+  /** Órarend */ timetable: /0203|(c_comm).*/,
+  /** Tárgyak */ courses: /03\d\d|(h_add).*/,
+  /** Vizsgák */ exams: /04\d\d|(h_exa|h_sig).*/,
+  /** Pénzügyek */ finances: /05\d\d/,
+  /** Információ */ information: /130[135]|131[346]|(c_gen|h_inst|h_fir|c_ele).*/,
+  /** Ügyintézés */ administration: /1311|1307|14\d\d|(h_sca|h_sza|h_app|c_onl).*/,
+};
+
+/**
+ * Check if the current location belongs to a given page group.
+ * @param {RegExp} groupPattern
+ */
+function isPageGroup(groupPattern) {
+  return groupPattern.test(window.location.search);
+}
+
+const exactPage = {
+  /** Órarend */ timetable: /0203|c_common_timetable/,
+  /** Leckekönyv */ markbook: /0206|h_markbook/,
+  /** Előrehaladás */ advance: /0222|h_advance/,
+  /** Tárgyfelvétel */ addSubjects: /0303|h_addsubjects/,
+  /** Vizsgajelentkezés */ modifyExams: /0401|h_exams/,
+  /** Felvett vizsgák */ signedExams: /0402|h_signedexams/,
+};
+
+/**
+ * Check if the current location is a given page.
+ * @param {RegExp} pagePattern
+ */
+function isExactPage(pagePattern) {
+  return pagePattern.test(window.location.search);
+}
+
+/**
+ * Repeat `fn` asynchronously a set number of times, using `window.setInterval`.
+ * You can also provide the `options.test` function to check if the repeater can exit
+ * early.
+ *
+ * @param {{count: number, interval: number, test?: () => boolean}} options 
+ *    properties of the repetition   
+ * @param {() => any} fn 
+ *    a function to repeatedly call
+ * 
+ * @return {number} 
+ *    the timer handle
+ */
+function repeat(fn, options) {
+  let {count, interval, test} = options;
+
+  --count;
+  fn();
+
+  const timer = window.setInterval(() => {
+    --count;
+    if (test && test()) clearInterval(timer);
+    if (count <= 0) clearInterval(timer);
+    fn();
+  }, interval);
+
+  return timer;
+}
+
 module.exports = {
   isNeptunPage,
   isLoginPage,
@@ -192,4 +258,9 @@ module.exports = {
   parseSubjectCode,
   isPassingGrade,
   isFailingGrade,
+  isExactPage,
+  exactPage,
+  isPageGroup,
+  pageGroup,
+  repeat,
 };
