@@ -1,0 +1,191 @@
+@use 'variables' as *;
+
+// Hide text above, below header
+#upEditLabelIcon,
+#panHeader,
+#panCloseHeader,
+#headerlabel,
+.left_boxes {
+  display: none;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  padding-left: 1rem;
+  border-bottom: 0.1rem solid $major-accent-fill;
+  color: $major-accent-text;
+  background-color: $major-accent-fill-contrast;
+}
+#training {
+  color: $neutral-fill;
+  margin-left: 0.25rem;
+}
+#logout-btn {
+  margin-left: auto;
+  padding: 0.5rem 1rem;
+  text-decoration: none;
+  color: inherit;
+
+  &:hover {
+    background-color: $major-accent-fill-active;
+  }
+}
+
+// Main menu
+ul.menubar,
+ul.menu {
+  list-style: none;
+  margin: 0;
+  padding-left: 0;
+}
+.menubar.root-level {
+  position: relative;
+  display: flex;
+  list-style: none;
+  padding: 0 0.25rem;
+  border-bottom: 1px solid $neutral-line;
+}
+// Main menu item w/ dropdown
+.menu-parent {
+  color: $neutral-text;
+  white-space: nowrap;
+  cursor: default;
+  font-weight: 400;
+
+  > span {
+    padding: 0.5rem 0.75rem;
+    display: block;
+  }
+
+  &.active {
+    font-weight: 500;
+    margin-bottom: -1px;
+    border-bottom: 2px solid $major-accent-fill;
+  }
+
+  &:hover {
+    color: $plain-text;
+  }
+}
+// Menu item w/ associated action
+.menu-item,
+.menu > .menu-item {
+  display: flex;
+  cursor: pointer;
+  color: $neutral-text;
+
+  // A little hacky, but it accomodates the custom `Mail` menu
+  > a {
+    color: $neutral-text;
+    text-decoration: none;
+    margin: -0.5rem -0.75rem;
+    padding: 0.5rem 0.75rem;
+    width: 100%;
+  }
+
+  &:hover,
+  &.menu-hover {
+    color: $major-accent-fill;
+    background-color: #efefef; // TODO replace with theme color
+  }
+}
+
+// Main menu - submenus
+.menu {
+  position: absolute;
+  display: none;
+  top: 2.35rem;
+  padding: 0.5rem 0;
+  width: max-content;
+  min-width: 250px;
+  background: $plain-fill;
+
+  box-shadow: 2px 2px 5px 0 gray;
+}
+.menu > .menu-item {
+  padding: 0.5rem 0.75rem;
+
+  cursor: pointer;
+  font-weight: 400;
+  font-size: inherit;
+}
+.menu::before {
+  // Arrow pointing up, close to the left
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 0;
+  top: 1px;
+  left: 15%;
+
+  border: 0.35em solid black;
+  border-color: transparent transparent $plain-fill $plain-fill;
+
+  transform-origin: 0 0;
+  transform: rotate(135deg);
+
+  box-shadow: -2px 2px 2px -1px lightgray;
+}
+
+@mixin menu-icon($icon) {
+  & > span {
+    position: relative;
+  }
+  & > span::before {
+    content: $icon;
+    margin-right: 0.25rem;
+    vertical-align: text-bottom;
+    color: $neutral-text;
+    font-size: 1.25rem;
+    font-family: "Material Icons";
+    line-height: 1;
+    opacity: 0.3;
+  }
+  &.active > span::before {
+    opacity: 1;
+  }
+}
+
+#mb1_Sajatadatok {
+  @include menu-icon("account_circle");
+}
+#mb1_Mail {
+  @include menu-icon("email");
+
+  &[data-unread] > span::after {
+    content: '';
+    position: absolute;
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 100%;
+    background-color: orange; // TODO replace with theme color
+    top: 0.55rem;
+    left: 1.65rem;
+  }
+
+  &[data-unread] #Mail-Inbox {
+    font-weight: 500;
+  }
+}
+#mb1_Tanulmanyok {
+  @include menu-icon("menu_book");
+}
+#mb1_Tanulmanyok_Órarend {
+  @include menu-icon("event");
+}
+#mb1_Targyak {
+  @include menu-icon("account_balance");
+}
+#mb1_Vizsgak {
+  @include menu-icon("star");
+}
+#mb1_Penzugyek {
+  @include menu-icon("attach_money");
+}
+#mb1_Informacio {
+  @include menu-icon("help_outline");
+}
+#mb1_Ügyintezes {
+  @include menu-icon("content_copy");
+}

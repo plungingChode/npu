@@ -1,7 +1,8 @@
 @use 'variables' as *;
 
 // Hide default progress indicators
-#progress, #customtextprogress {
+#progress,
+#customtextprogress {
   visibility: hidden;
 }
 
@@ -19,7 +20,7 @@
   top: 0;
   left: 0;
   width: 100vw;
-  height: 0.5rem;
+  height: 3px;
 
   background-color: $neutral-fill;
 
@@ -30,10 +31,12 @@
   // Firefox only
   &::-moz-progress-bar {
     background-color: transparent;
+
+    // prettier-ignore
     background-image: linear-gradient(
-      to right,
-      $major-accent-fill,
-      $major-accent-fill 25%,
+      to right, 
+      $major-accent-fill, 
+      $major-accent-fill 25%, 
       transparent 25.001%
     );
 
@@ -47,8 +50,8 @@
     background-color: $neutral-fill;
   }
   &::after {
-    content: '';
-    
+    content: "";
+
     position: absolute;
     top: 0;
     left: 0;
