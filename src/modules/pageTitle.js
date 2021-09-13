@@ -1,8 +1,12 @@
 const $ = window.jQuery;
 const utils = require("../utils");
 
+function shouldInitialize() {
+  return utils.isLoggedIn();
+}
+
 // Add current page name to the window title
-function fixTitle() {
+function initialize() {
   const pageTitle = $("#upMenuCaption_menucaption").text();
   const newTitle = `${pageTitle} - ${document.title}`;
 
@@ -15,8 +19,6 @@ function fixTitle() {
 }
 
 module.exports = {
-  shouldInitialize: () => utils.isLoggedIn(),
-  initialize: () => {
-    fixTitle();
-  },
+  shouldInitialize,
+  initialize
 };
