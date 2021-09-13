@@ -228,7 +228,7 @@ function parseLoginForm(loginTable) {
   };
 }
 
-function shouldActivate() {
+function shouldInitialize() {
   return utils.isLoginPage();
 }
 
@@ -245,6 +245,6 @@ function initialize() {
 }
 
 module.exports = {
-  shouldActivate,
+  shouldInitialize,
   initialize,
 };

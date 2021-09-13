@@ -10,7 +10,7 @@ function fixMarkList() {
 }
 
 module.exports = {
-  shouldActivate: () => utils.isLoggedIn() && utils.isPageId("0206", "h_markbook"),
+  shouldInitialize: () => utils.isLoggedIn() && utils.isPageId("0206", "h_markbook"),
   initialize: () => {
     fixMarkList();
   },

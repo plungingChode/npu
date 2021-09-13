@@ -28,7 +28,7 @@ function fixOfficialMessagePopup() {
 }
 
 module.exports = {
-  shouldActivate: () => utils.isLoggedIn(),
+  shouldInitialize: () => utils.isLoggedIn(),
   initialize: () => {
     fixOfficialMessagePopup();
   },

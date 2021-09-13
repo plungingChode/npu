@@ -7,7 +7,7 @@ function hideSurveyPopup() {
 }
 
 module.exports = {
-  shouldActivate: () => utils.isLoggedIn(),
+  shouldInitialize: () => utils.isLoggedIn(),
   initialize: () => {
     hideSurveyPopup();
   },

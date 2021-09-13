@@ -13,6 +13,6 @@ function initialize() {
 }
 
 module.exports = {
-  shouldActivate: () => utils.isLoggedIn(),
-  initialize
+  shouldInitialize: () => utils.isLoggedIn(),
+  initialize,
 };

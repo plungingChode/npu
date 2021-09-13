@@ -132,7 +132,7 @@ function fixTermSelect() {
 }
 
 module.exports = {
-  shouldActivate: () => utils.isLoggedIn(),
+  shouldInitialize: () => utils.isLoggedIn(),
   initialize: () => {
     fixTermSelect();
   },

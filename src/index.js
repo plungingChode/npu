@@ -3,23 +3,23 @@ const storage = require("./storage");
 
 const modules = [
   // Styling overhaul
-  require('./modules/customStyle'),
-  
+  require("./modules/customStyle"),
+
   // Login page
   // require("./modules/autoLogin"),
   require("./modules/loginRetry"),
-  require("./modules/transformLogin"),
+  require("./modules/transformLogin"), // custom
 
   // All authenticated pages
-  // require("./modules/hideHeader"),
-  require("./modules/pageTitle"),
-  require("./modules/mainMenuFixes"),
+  // require("./modules/hideHeader"), // obsolete
+  require("./modules/pageTitle"), // done
+  require("./modules/mainMenuFixes"), // done
   require("./modules/termSelectorFixes"),
   require("./modules/paginationFixes"),
   require("./modules/officialMessageAlert"),
   require("./modules/hideSurveyPopup"),
   require("./modules/infiniteSession"),
-  require("./modules/loadingIndicator"),
+  require("./modules/loadingIndicator"), // done
 
   // Timetable page
   require("./modules/timetableFixes"),
@@ -43,10 +43,11 @@ const modules = [
 ];
 
 (async () => {
+  console.log("initialize npu")
   await storage.initialize();
 
   modules.forEach(module => {
-    if (module.shouldActivate() && (utils.isNeptunPage() || module.runOutsideNeptun)) {
+    if (module.shouldInitialize() && (utils.isNeptunPage() || module.runOutsideNeptun)) {
       module.initialize();
     }
   });

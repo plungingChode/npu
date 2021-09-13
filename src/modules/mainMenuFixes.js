@@ -5,9 +5,9 @@ const utils = require("../utils");
 
 /**
  * Designate the element with `shortcutId` as a shortcut for `targetId`.
- * 
+ *
  * @param {string} shortcutId
- * @param {string} targetId 
+ * @param {string} targetId
  */
 function createShortcut(shortcutId, targetId) {
   const shortcut = $(shortcutId);
@@ -42,15 +42,16 @@ function moveTimetable() {
  */
 function addMeetStreetToggle() {
   const isNeptun = $("#upChooser_chooser_neptun").hasClass("NeptunChooserSelected");
-  let menuItem = {target: null, caption: null};
-  
+  let menuItem = { target: null, caption: null };
+
   if (isNeptun) {
-    menuItem = {target: "btnKollab", caption: "Meet Street"}
+    menuItem = { target: "btnKollab", caption: "Meet Street" };
   } else {
-    menuItem = {target: "btnNeptun", caption: "Neptun"}
+    menuItem = { target: "btnNeptun", caption: "Neptun" };
   }
 
   // Add item to main menu
+  // prettier-ignore
   $("#mb1").append($(`
     <li class="menu-item">
       <a href="javascript:__doPostBack('upChooser$${menuItem.target}','')">
@@ -67,6 +68,6 @@ function initialize() {
 }
 
 module.exports = {
-  shouldActivate: () => utils.isLoggedIn(),
+  shouldInitialize: () => utils.isLoggedIn(),
   initialize,
 };

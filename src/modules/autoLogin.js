@@ -174,9 +174,7 @@ function initAutoLogin() {
   loginButtonText = submit.attr("value");
   submit.attr("value", `${loginButtonText} (${loginCount})`);
 
-  $(".login_button_td").append(
-    '<div id="abortLogin"><a href="#" class="abort_login">Megszakít</a></div>'
-  );
+  $(".login_button_td").append('<div id="abortLogin"><a href="#" class="abort_login">Megszakít</a></div>');
   $(".login_button_td a.abort_login").click(function (e) {
     e.preventDefault();
     abortLogin();
@@ -227,7 +225,7 @@ function submitLogin() {
 }
 
 module.exports = {
-  shouldActivate: () => utils.isLoginPage(),
+  shouldInitialize: () => utils.isLoginPage(),
   initialize: () => {
     initUserSelect();
     initAutoLogin();

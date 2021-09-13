@@ -186,7 +186,7 @@ function initExamAutoList() {
 }
 
 module.exports = {
-  shouldActivate: () => utils.isLoggedIn() && utils.isPageId("0401", "h_exams"),
+  shouldInitialize: () => utils.isLoggedIn() && utils.isPageId("0401", "h_exams"),
   initialize: () => {
     fixExamList();
     initExamAutoList();

@@ -24,7 +24,7 @@ function fixTimetable() {
 }
 
 module.exports = {
-  shouldActivate: () => utils.isLoggedIn() && utils.isPageId("0203", "c_common_timetable"),
+  shouldInitialize: () => utils.isLoggedIn() && utils.isPageId("0203", "c_common_timetable"),
   initialize: () => {
     fixTimetable();
   },

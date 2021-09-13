@@ -1,9 +1,9 @@
 const $ = window.jQuery;
-const utils = require("../utils");
+const { injectCss, isPassingGrade, isFailingGrade, isLoggedIn, isExactPage, exactPage } = require("../utils");
 
 // Enhance signed exam list style and functionality
-function fixSignedExamList() {
-  utils.injectCss(`
+function initialize() {
+  injectCss(`
     #h_signedexams_gridExamList_bodytable tr.npu_missed td {
       background-color: #F8EFB1 !important;
       color: #525659 !important;
@@ -47,10 +47,10 @@ function fixSignedExamList() {
         }
 
         if (attended) {
-          if (utils.isPassingGrade(grade)) {
+          if (isPassingGrade(grade)) {
             row.addClass("npu_completed");
           }
-          if (utils.isFailingGrade(grade)) {
+          if (isFailingGrade(grade)) {
             row.addClass("npu_failed");
           }
         } else {
@@ -61,9 +61,11 @@ function fixSignedExamList() {
   }, 250);
 }
 
+function shouldInitialize() {
+  return isLoggedIn() && isExactPage(exactPage.signedExams);
+}
+
 module.exports = {
-  shouldActivate: () => utils.isLoggedIn() && utils.isPageId("0402", "h_signedexams"),
-  initialize: () => {
-    fixSignedExamList();
-  },
+  shouldInitialize,
+  initialize,
 };

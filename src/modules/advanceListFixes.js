@@ -24,7 +24,7 @@ function fixAdvanceList() {
 }
 
 module.exports = {
-  shouldActivate: () => utils.isLoggedIn() && utils.isPageId("0222", "h_advance"),
+  shouldInitialize: () => utils.isLoggedIn() && utils.isPageId("0222", "h_advance"),
   initialize: () => {
     fixAdvanceList();
   },

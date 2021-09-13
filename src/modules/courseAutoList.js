@@ -28,7 +28,7 @@ function initCourseAutoList() {
 }
 
 module.exports = {
-  shouldActivate: () => utils.isLoggedIn() && utils.isPageId("0303", "h_addsubjects"),
+  shouldInitialize: () => utils.isLoggedIn() && utils.isPageId("0303", "h_addsubjects"),
   initialize: () => {
     initCourseAutoList();
   },

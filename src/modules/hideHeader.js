@@ -10,7 +10,7 @@ function hideHeader() {
 }
 
 module.exports = {
-  shouldActivate: () => utils.isLoggedIn(),
+  shouldInitialize: () => utils.isLoggedIn(),
   initialize: () => {
     hideHeader();
   },

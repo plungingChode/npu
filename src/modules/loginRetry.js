@@ -13,7 +13,7 @@ function fixWaitDialog() {
 }
 
 module.exports = {
-  shouldActivate: () => utils.isLoginPage(),
+  shouldInitialize: () => utils.isLoginPage(),
   initialize: () => {
     fixWaitDialog();
   },
